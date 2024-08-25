@@ -20,7 +20,8 @@ global.owner = [
 
 global.ownername = '𝚂𝙰𝚈𝙴𝙳-𝚂𝙷𝙰𝚆𝙰𝚉𝙰';
 global.ownernumber = '201145624848';
-
+global.myid = '201145624848@s.whatsapp.net';
+  
 global.suittag = ['201145624848', '201204885212'];
 global.prems = ['201145624848', '201204885212'];
 
@@ -39,7 +40,19 @@ global.styel3 = '│✑ 「 ';
 global.styel4 = ' 」';
 global.styel5 = '└┬ ✑ 「 ';
 global.styel6 = '│✑ ';
-global.styel7 = '└───────────────┈ ⳹';
+global.styel7 = '「 ';
+
+global.tx1 = '╭────┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄────╮';
+global.tx2 = '│';
+global.tx3 = '├';
+global.tx4 = '┤';
+global.tx5 = '───┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄───';
+global.tx6 = '◈─┄┄┄┄〘';
+global.tx7 = '〙┄┄┄┄─◈';
+global.tx8 = '┄┄⋗';
+global.tx9 = '├───┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄───┤';
+global.tx10 = '╰────┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄────╯';
+
 
 global.imagen1 = fs.readFileSync('./Menu2.png');
 global.imagen2 = fs.readFileSync('./src/nuevobot.jpg');
@@ -47,10 +60,18 @@ global.imagen3 = fs.readFileSync('./src/Pre Bot Publi.png');
 global.imagen4 = fs.readFileSync('./Menu.png');
 global.imagen5 = fs.readFileSync('./src/+18.jpg');
 global.imagen6 = fs.readFileSync('./Menu3.png');
-global.imagen7 = fs.readFileSync('./Menu.png');
-global.imagen8 = fs.readFileSync('./Menu.png')
-global.imagen9 = fs.readFileSync('./Menu.png')
-global.imagen10 = fs.readFileSync('./Menu.png')
+global.imagen7 = fs.readFileSync('./Menu2.png');
+global.imagen8 = fs.readFileSync('./Menu3.png');
+global.imagen9 = fs.readFileSync('./Menu4.png');
+global.imagen10 = fs.readFileSync('./Menu5.png');
+
+global.immg1 = fs.readFileSync('./Menu.png');
+global.immg2 = fs.readFileSync('./Menu2.png');
+global.immg3 = fs.readFileSync('./Menu3.png');
+global.immg4 = fs.readFileSync('./Menu4.png');
+global.immg5 = fs.readFileSync('./Menu5.png');
+
+
 
 global.img1 = 'https://telegra.ph/file/ba984d78fa802662438ee.jpg';
 global.img2 = 'https://telegra.ph/file/0e22282b399e105776618.jpg';
@@ -103,10 +124,17 @@ global.ht1 = '*⋄━───═══⌬≼≽⌬═══───━⋄*';
 global.ht2 = '*━────── • • ──────━*';
 global.ht3 = '*━─────𖦹𖧷𖦹─────━*';
 
-global.botdate = `*[ 📅 ] التاريخ :*  ${moment.tz('Egypt/Cairo_City').format('DD/MM/YY')}`;
-global.bottime = `*[ ⏳ ] الوقت :* ${moment.tz('Egypt/Cairo_City').format('HH:mm:ss')}`;
+global.botdate = `*[ 📅 ] التاريخ :*  ${moment.tz('Africa/Cairo').format('DD/MM/YY')}`;
+global.bottime = `*[ ⏳ ] الوقت :* ${moment.tz('Africa/Cairo').format('HH:mm:ss')}`;
 
-global.fgif = {key: {participant: '0@s.whatsapp.net'}, message: {'videoMessage': {'title': wm, 'h': `Hmm`, 'seconds': '999999999', 'gifPlayback': 'true', 'caption': bottime, 'jpegThumbnail': fs.readFileSync('./Menu.png')}}};
+global.fgif = {key: {participant: '0@s.whatsapp.net', remoteJid: 'status@broadcast', fromMe: false}, message: {'videoMessage': {'title': wm, 'h': `Hmm`, 'seconds': '999999999', 'gifPlayback': 'true', 'caption': bottime, 'jpegThumbnail': fs.readFileSync('./Menu.png')}}};
+global.fmsg = {key: {participant: '0@s.whatsapp.net', remoteJid: 'status@broadcast', fromMe: false}, message: {conversation: 'فلسطين حرة مهما كان الثمن ❤️🧞'}};
+global.fcon = {key: {participant: '0@s.whatsapp.net', remoteJid: 'status@broadcast', fromMe: false, 'id': wm}, message: {'contactMessage': { 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid= '201145624848@s.whatsapp.net':'201145624848@s.whatsapp.net'\nitem1.X-ABLabel:Ponsel\nEND:VCARD` } }, 'participant': '0@s.whatsapp.net' };
+global.fgif2 = {key: {participant: '0@s.whatsapp.net',  ...('6289643739077-1613049930@g.us' ? {remoteJid: '6289643739077-1613049930@g.us'} : {})}, message: {'videoMessage': {'title': '𝕊ℍ𝔸𝕎𝔸ℤ𝔸-𝔹𝕆𝕋', 'h': `Hmm`, 'seconds': '99999', 'gifPlayback': 'true', 'caption': '𝐒𝐇𝐀𝐖𝐀𝐙𝐀-𝐁𝐎𝐓', 'jpegThumbnail': false}}};
+global.fgrp = {key: {participant: '0@s.whatsapp.net', remoteJid: '6289643739077-1613049930@g.us', fromMe: false, 'id': wm}, message: {'contactMessage': { 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid= '201145624848@s.whatsapp.net':'201145624848@s.whatsapp.net'\nitem1.X-ABLabel:Ponsel\nEND:VCARD` } }, 'participant': '0@s.whatsapp.net' };
+global.floc = {key: {participant: '0@s.whatsapp.net', remoteJid: 'status@broadcast', fromMe: false}, message: {locationMessage: {degreesLatitude: 37.7749, degreesLongitude: -122.4194, name: 'Palestine', address: 'San Francisco, CA, USA', url: 'https://maps.google.com/?q=37.7749,-122.4194'}}};
+global.frol = {key: {participant: '0@s.whatsapp.net', remoteJid: 'status@broadcast', fromMe: false}, message: {orderMessage: { itemCount: 2024, status: 1, thumbnail: 'https://telegra.ph/file/ba984d78fa802662438ee.jpg', surface: 1, message: wm, orderTitle: packname, sellerJid: '0@s.whatsapp.net' } } };
+
 global.multiplier = 99;
 global.flaaa = [
   'https://flamingtext.com/net-fu/proxy_form.cgi?&imageoutput=true&script=water-logo&script=water-logo&fontsize=90&doScale=true&scaleWidth=800&scaleHeight=500&fontsize=100&fillTextColor=%23000&shadowGlowColor=%23000&backgroundColor=%23000&text=',
