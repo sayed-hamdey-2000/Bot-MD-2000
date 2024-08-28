@@ -100,10 +100,21 @@
   },
   "optionalDependencies": {
     "@xct007/frieren-scraper": "github:xct007/frieren-scraper",
-    "wa-sticker-formatter": "^4.3.2"
+    "wa-sticker-formatter": "^4.3.2",
+    "@vitalets/google-translate-api": "^9.2.0",
+		"bing-scraper": "^1.4.11",
+		"canvafy": "^7.0.4",
+		"hmfull": "^2.4.3",
+		"rembg-node": "^2.0.1",
+		"sagiri": "^3.4.0",
+		"scathach-api": "^1.0.16",
+		"tinycolor2": "^1.6.0"
   },
   "devDependencies": {
     "eslint": "^8.45.0",
     "eslint-config-google": "^0.14.0"
+  },
+  "overrides": {
+		"sharp": "^0.32.2"
   }
 }
