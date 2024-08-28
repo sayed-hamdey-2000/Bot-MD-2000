@@ -84,13 +84,22 @@ global.img6 = 'https://telegra.ph/file/fbac075550b8622a94b8e.jpg';
 global.mods = [];
 
 
-global.d = new Date(new Date + 3600000);
+global.d = new Date(new Date().toLocaleString("en-US", {timeZone: "Africa/Cairo"}));
+  //new Date(new Date + 3600000);
 global.locale = 'ar';
+
 global.dia = d.toLocaleDateString(locale, {weekday: 'long'});
 global.fecha = d.toLocaleDateString('ar', {day: 'numeric', month: 'numeric', year: 'numeric'});
 global.mes = d.toLocaleDateString('ar', {month: 'long'});
 global.año = d.toLocaleDateString('ar', {year: 'numeric'});
 global.tiempo = d.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true});
+
+global.week = d.toLocaleDateString(locale, { weekday: 'long' });
+global.day = d.toLocaleDateString('en', { day: '2-digit' });
+global.month = d.toLocaleDateString(locale, { month: 'long' });
+global.year = d.toLocaleDateString('en', { year: 'numeric' });
+global.time = d.toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
 
 global.wm2 = `${dia} ${fecha}\n𝕊ℍ𝔸𝕎𝔸ℤ𝔸-𝔹𝕆𝕋`;
 global.gt = '𝐒𝐇𝐀𝐖𝐀𝐙𝐀-𝐁𝐎𝐓';
