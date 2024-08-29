@@ -1,7 +1,7 @@
 {
-  "name": "TheMystic-Bot-MD",
+  "name": "themystic-bot-md",
   "version": "1.0.0",
-  "description": "Subs. al canal de YT The Shadow Borkers - TEAM",
+  "description": "Un chatbot automatizado para WhatsApp basado en Node.js, que permite realizar múltiples funciones y personalizaciones en la plataforma.",
   "main": "index.js",
   "type": "module",
   "directories": {
@@ -13,8 +13,6 @@
     "start": "node index.js",
     "qr": "node index.js qr",
     "code": "node index.js code",
-    "test": "node test.js",
-    "test2": "nodemon index.js",
     "eslint": "eslint .",
     "eslintfix": "eslint --fix ."
   },
@@ -31,6 +29,9 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "@whiskeysockets/baileys": "*",
+    "@ibaraki-douji/pixivts": "^2.4.1",
+    "@bochilteam/scraper-sosmed": "^1.0.5",
     "@adiwajshing/keyed-db": "^0.2.4",
     "@bochilteam/scraper": "^4.2.4",
     "@brandond/findthelyrics": "^2.0.5",
@@ -38,9 +39,8 @@
     "@sefinek/google-tts-api": "*",
     "@shineiichijo/marika": "^2.0.6",
     "@vitalets/google-translate-api": "^8.0.0",
-    "@whiskeysockets/baileys": "^6.7.7",
     "@StarlightsTeam/Scraper": "github:StarlightsTeam/StarlightsTeam-Scraper",
-    "baileys": "git+https://github.com/Skidy89/baileys.git#main",
+    "baileys": "git+https://github.com/Skidy89/baileys.git#master",
     "acrcloud": "^1.4.0",
     "api-dylux": "^1.6.2",
     "aptoide-scraper": "^1.0.1",
@@ -100,20 +100,10 @@
   },
   "optionalDependencies": {
     "@xct007/frieren-scraper": "github:xct007/frieren-scraper",
-    "wa-sticker-formatter": "^4.3.2",
-		"bing-scraper": "^1.4.11",
-		"canvafy": "^7.0.4",
-		"hmfull": "^2.4.3",
-		"rembg-node": "^2.0.1",
-		"sagiri": "^3.4.0",
-		"scathach-api": "^1.0.16",
-		"tinycolor2": "^1.6.0"
+    "wa-sticker-formatter": "^4.3.2"
   },
   "devDependencies": {
     "eslint": "^8.45.0",
     "eslint-config-google": "^0.14.0"
-  },
-  "overrides": {
-		"sharp": "^0.32.2"
   }
 }
