@@ -1,7 +1,7 @@
-import { sticker } from '../lib/sticker.js'
-import uploadFile from '../lib/uploadFile.js'
-import uploadImage from '../lib/uploadImage.js'
-import { webp2png } from '../lib/webp2mp4.js'
+import { sticker } from '../lib/sticker.js';
+import uploadFile from '../lib/uploadFile.js';
+import uploadImage from '../lib/uploadImage.js';
+import { webp2mp4 } from '../lib/webp2mp4.js';
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
 let stiker = false
@@ -21,7 +21,7 @@ stiker = await sticker(img, false, global.packname, global.author)
 console.error(e)
 } finally {
 if (!stiker) {
-if (/webp/g.test(mime)) out = await webp2png(img)
+if (/webp/g.test(mime)) out = await webp2mp4(img)
 else if (/image/g.test(mime)) out = await uploadImage(img)
 else if (/video/g.test(mime)) out = await uploadFile(img)
 if (typeof out !== 'string') out = await uploadImage(img)
@@ -44,7 +44,7 @@ else throw '*خطأ ، يرجى المحاولة مرة أخرى. لا تنسي 
 }}
 handler.help = ['stiker (caption|reply media)', 'stiker <url>', 'stikergif (caption|reply media)', 'stikergif <url>']
 handler.tags = ['sticker']
-handler.command = /^ستك|ملصق?$/i
+handler.command = /^ستيك|ملصق?$/i
 export default handler
 
 const isUrl = (text) => {
