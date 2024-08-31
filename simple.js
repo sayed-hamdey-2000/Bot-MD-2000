@@ -1,5 +1,5 @@
 import path from 'path';
-import {toAudio} from './converter.js';
+import {toAudio} from './lib/converter.js';
 import chalk from 'chalk';
 import fetch from 'node-fetch';
 import PhoneNumber from 'awesome-phonenumber';
@@ -8,7 +8,7 @@ import util from 'util';
 import {fileTypeFromBuffer} from 'file-type';
 import {format} from 'util';
 import {fileURLToPath} from 'url';
-import store from './store.js';
+import store from './lib/store.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
