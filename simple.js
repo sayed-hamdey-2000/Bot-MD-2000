@@ -295,7 +295,7 @@ END:VCARD
           isForwarded: true,
           forwardedNewsletterMessageInfo: {
             newsletterJid: '120363291329944922@newsletter',
-            newsletterName: 'Ś O Ń ẽ Ќ ẽ Ŕ ẽ Ќ  Ⲃ O Т  ☕🌿', 
+            newsletterName: 'S H A W A Z A  Ⲃ O Т  🧞', 
             serverMessageId: '' }, 
                 ...options
                 }
@@ -455,7 +455,7 @@ if (Buffer.isBuffer(text)) {
 return conn.sendFile(jid, text, 'file', '', quoted, false, options)
 } else {
 let canalId = ["120363291329944922@newsletter"]
-let canalNombre = ["Ś O Ń ẽ Ќ  ẽ Ŕ ẽ Ќ Ⲃ O Т  ☕🌿"]
+let canalNombre = ["S H A W A Z A Ⲃ O Т  🧞"]
 
 async function getRandomChannel() {
 let randomIndex = Math.floor(Math.random() * canalId.length)
