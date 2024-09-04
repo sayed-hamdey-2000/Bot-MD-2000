@@ -1,22 +1,22 @@
 <p align="center">
- <img width="600px" src="https://telegra.ph/file/2b97c6e486ae7412c6122.jpg" align="center"/>
- <h2 align="center">Shawaza-Bot-MD</h2>
- <p align="center">The Bot WhatsApp, Powered by AI, designed in a language Node.js.</p>
+  <img width="600px" src="https://telegra.ph/file/2b97c6e486ae7412c6122.jpg" alt="Shawaza-Bot-MD"/>
+  <h2 align="center">Shawaza-Bot-MD</h2>
+  <p align="center">بوت واتساب مدعوم بالذكاء الاصطناعي ومبني بلغة Node.js.</p>
 </p>
 
 #
 
-# التعليمات :
+## التعليمات
 
-> [! الأهمية ] \
+> **الأهمية**  
 > تأكد من أن لديك Node.js مثبتًا على جهازك.
 
-> [! التحذيرات ]  \
+> **التحذيرات**  
 > يُفضل تشغيل البوت على خادم آمن ومخصص لتجنب أي مشاكل.
+
 #
 
-
-# التنصيب :
+## التنصيب
 
 <p align="center">
   <a href="https://app.koyeb.com/deploy?type=git&repository=https://github.com/BrunoSobrino/TheMystic-Bot-MD&branch=master&name=mysticbot">
@@ -28,34 +28,58 @@
   <a href="https://repl.it/github/BrunoSobrino/TheMystic-Bot-MD">
     <img src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/replit.svg" alt="Run on Repl.it"/>
   </a>
-<a href="https://dashboard.toystack.ai/repositories/a1a5a3d9-c3df-453f-b2da-043e21f5c99e/deployments">
-  <img src="https://via.placeholder.com/130x30/007bff/ffffff?text=Deploy+to+ToyStack" alt="Deploy to ToyStack"/>
-</a>
-
-
+  <a href="https://dashboard.toystack.ai/repositories/a1a5a3d9-c3df-453f-b2da-043e21f5c99e/deployments">
+    <img src="https://via.placeholder.com/130x30/007bff/ffffff?text=Deploy+to+ToyStack" alt="Deploy to ToyStack"/>
+  </a>
+  <a href="https://my.scalingo.com/deploy?source=https://github.com/BrunoSobrino/TheMystic-Bot-MD">
+    <img src="https://via.placeholder.com/130x30/4F4E8A/ffffff?text=Deploy+to+Scalingo" alt="Deploy to Scalingo"/>
+  </a>
 </p>
 
-# الاستضافة :
 
-┌─ 〘 *طريقة الاستضافة في منصة `scalingo`* 〙 ─ ⳹
-│✑ 「 الرابط: https://dashboard.scalingo.com/ 」
-└┬ ✑ 「 *الخطـــوات*  」 ─ ⳹
-   │✑  التسجيل في المنصه بالربط بحسابك على `github`.
-   │✑  اضغط على بعد التسجيل `Create an app`.
-   │✑ أضف أسم لمشروعك في خانة `App name`.
-   │✑ اضغط على `create app`.
-   │✑ اضغط على `Link repo` في خيار `GitHub`.
-   │✑ اختر حسابك في خانة `Select an organization`.
-   │✑ اختر ملف بوتك في خانة `Select a repository`.
-   │✑ اختر اكتفتى التفعيل في خانة `Select a branch`.
-   │✑ اضغط على `Content`. 
-   │✑ اضغط على `Finish`. 
-   │✑ اضغط على `Overview`. 
-   │✑ اختر `Deploy`. 
-   │✑ اضغط على `Manual deployment`. 
-   │✑ اضغط على `Trigger deployment`. 
-   │✑ لمتابعة تحميل الاستضافة اضغط على :
-   │✑ `Deployment in progress (starting)…`
-   │✑ انتظر تحميل الاستضافة.
-   │✑ مبروك عليك تفعيل البوت.
-   └─────〘 *𝚂𝙰𝚈𝙴𝙳-𝚂𝙷𝙰𝚆𝙰𝚉𝙰* 〙─────┈ ⳹
+#
+
+## الاستضافة
+
+### Scalingo
+
+┌─ 〘 *طريقة الاستضافة في منصة `Scalingo`* 〙─ ⳹  
+│✑ [الرابط: https://dashboard.scalingo.com/](https://dashboard.scalingo.com/)  
+└┬ ✑ **الخطوات**  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ التسجيل في المنصة عبر ربط حسابك على `GitHub`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ بعد التسجيل اضغط على `Create an app`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ أضف اسمًا لمشروعك في خانة `App name`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اضغط على `Create app`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اضغط على `Link repo` في خيار `GitHub`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اختر حسابك في خانة `Select an organization`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اختر ملف بوتك في خانة `Select a repository`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اختر الفرع المطلوب في خانة `Select a branch`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اضغط على `Content`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اضغط على `Finish`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اضغط على `Overview`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اختر `Deploy`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اضغط على `Manual deployment`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اضغط على `Trigger deployment`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ لمتابعة التحميل اضغط على `Deployment in progress (starting)…`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ انتظر حتى يكتمل التحميل.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ تهانينا! تم تفعيل البوت بنجاح.  
+└─────〘 *𝚂𝙰𝚈𝙴𝙳-𝚂𝙷𝙰𝚆𝙰𝚉𝙰* 〙─────
+
+### ToyStack
+
+┌─ 〘 *طريقة الاستضافة في منصة `ToyStack`* 〙─ ⳹  
+│✑ [الرابط: https://dashboard.toystack.ai/](https://dashboard.toystack.ai/)  
+└┬ ✑ **الخطوات**  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ سجل الدخول إلى منصة `ToyStack` باستخدام حساب `GitHub` الخاص بك.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اسمح للمنصة بالوصول إلى مشاريعك.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اضغط على `IMPORT & ACTIVATE REPOSITORIES`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اختر المستودع الذي يحتوي على البوت من حساب `GitHub` الخاص بك.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اختر الفرع الذي تريد نشره.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اختر الخطة المجانية للنشر `0$`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اضغط على `ACTIVATION`.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ أضف معلوماتك المطلوبة واستكمل الخطوات.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اضغط على `Deploy from a branch`، ثم اختر البيئة (master)، ثم زمن التفعيل.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ اضغط على `Deploy` لبدء عملية النشر.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ انتظر حتى تكتمل عملية النشر.  
+&nbsp;&nbsp;&nbsp;&nbsp;│✑ تهانينا! الآن البوت جاهز للعمل.  
+└─────〘 *𝚂𝙰𝚈𝙴𝙳-𝚂𝙷𝙰𝚆𝙰𝚉𝙰* 〙─────
