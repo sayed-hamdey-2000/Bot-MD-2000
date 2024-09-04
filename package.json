@@ -29,7 +29,7 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.7.7",
+    "@whiskeysockets/baileys": "npm:@whiskeysockets/baileys@6.7.2",
     "@ibaraki-douji/pixivts": "^2.4.1",
     "@bochilteam/scraper-sosmed": "^1.0.5",
     "@adiwajshing/keyed-db": "^0.2.4",
