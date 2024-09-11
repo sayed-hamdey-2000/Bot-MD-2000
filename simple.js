@@ -774,8 +774,8 @@ sendStvid: {
                     }
                 },
 	  
-        
-   // sendButton: {
+        sendButton: {
+   
       /**
              * send Button
              * @param {String} jid
@@ -786,186 +786,106 @@ sendStvid: {
              * @param {import("baileys").proto.WebMessageInfo} quoted
              * @param {Object} options
              */
-   /*   async value(jid, text = '', footer = '', buffer, buttons, quoted, options) {
-        let type;
-        if (Array.isArray(buffer)) (options = quoted, quoted = buttons, buttons = buffer, buffer = null);
-        else if (buffer) {
-          try {
-            (type = await conn.getFile(buffer), buffer = type.data);
-          } catch {
-            buffer = null;
-          }
-        }
-        if (!Array.isArray(buttons[0]) && typeof buttons[0] === 'string') buttons = [buttons];
-        if (!options) options = {};
-        const message = {
-          ...options,
-          [buffer ? 'caption' : 'text']: text || '',
-          footer,
-          buttons: buttons.map((btn) => ({
-            buttonId: !nullish(btn[1]) && btn[1] || !nullish(btn[0]) && btn[0] || '',
-            buttonText: {
-              displayText: !nullish(btn[0]) && btn[0] || !nullish(btn[1]) && btn[1] || '',
-            },
-          })),
-          ...(buffer ?
-                        options.asLocation && /image/.test(type.mime) ? {
-                          location: {
-                            ...options,
-                            jpegThumbnail: buffer,
-                          },
-                        } : {
-                          [/video/.test(type.mime) ? 'video' : /image/.test(type.mime) ? 'image' : 'document']: buffer,
-                        } : {}),
-        };
 
-        return await conn.sendMessage(jid, message, {
-          quoted,
-          upload: conn.waUploadToServer,
-          ...options,
-        });
-      },
-      enumerable: true,
-    },*/
-
-	  
-sendButton: {
     async value(jid, text = '', footer = '', buffer, buttons, copy, urls, quoted, options) {
-        let img, video
-
-    
-        if (/^https?:\/\//i.test(buffer)) {
+        let media;
+        
+        async function fetchMediaType(url) {
             try {
-                // Obtener el tipo MIME de la URL
-                const response = await fetch(buffer)
-                const contentType = response.headers.get('content-type')
-                if (/^image\//i.test(contentType)) {
-                    img = await prepareWAMessageMedia({ image: { url: buffer } }, { upload: conn.waUploadToServer })
-                } else if (/^video\//i.test(contentType)) {
-                    video = await prepareWAMessageMedia({ video: { url: buffer } }, { upload: conn.waUploadToServer })
-                } else {
-                    console.error("Tipo MIME no compatible:", contentType)
-                }
+                const response = await fetch(url);
+                const contentType = response.headers.get('content-type');
+                return contentType;
             } catch (error) {
-                console.error("Error al obtener el tipo MIME:", error)
+                console.error("خطأ في جلب نوع الملف:", error);
+                return null;
+            }
+        }
+
+        if (/^https?:\/\//i.test(buffer)) {
+            const contentType = await fetchMediaType(buffer);
+            if (/^image\//i.test(contentType)) {
+                media = await prepareWAMessageMedia({ image: { url: buffer } }, { upload: conn.waUploadToServer });
+            } else if (/^video\//i.test(contentType)) {
+                media = await prepareWAMessageMedia({ video: { url: buffer } }, { upload: conn.waUploadToServer });
+            } else {
+                console.error("نوع الملف غير مدعوم:", contentType);
             }
         } else {
-            
             try {
-                const type = await conn.getFile(buffer)
-               if (/^image\//i.test(type.mime)) {
-                    img = await prepareWAMessageMedia({ image: { url: buffer } }, { upload: conn.waUploadToServer })
+                const type = await conn.getFile(buffer);
+                if (/^image\//i.test(type.mime)) {
+                    media = await prepareWAMessageMedia({ image: { url: buffer } }, { upload: conn.waUploadToServer });
                 } else if (/^video\//i.test(type.mime)) {
-                    video = await prepareWAMessageMedia({ video: { url: buffer } }, { upload: conn.waUploadToServer })
+                    media = await prepareWAMessageMedia({ video: { url: buffer } }, { upload: conn.waUploadToServer });
                 }
             } catch (error) {
-                console.error("Error al obtener el tipo de archivo:", error);
+                console.error("خطأ في الحصول على نوع الملف:", error);
             }
         }
-	    
 
-	if (buttons) {
-	    
-        const dynamicButtons = buttons.map(btn => ({
-            name: 'quick_reply',
-            buttonParamsJson: JSON.stringify({
-                display_text: btn[0],
-                id: btn[1]
-            }),
-        }));
-      }
-       
-        if (copy && Array.isArray(copy) && (typeof copy === 'string' || typeof copy === 'number')) {
-            // Añadir botón de copiar
-		dynamicButtons.push({
-            copy.map(btn => ({
+        let dynamicButtons = [];
+
+        // إنشاء أزرار الرد السريع
+        if (buttons) {
+            dynamicButtons = buttons.map(btn => ({
+                name: 'quick_reply',
+                buttonParamsJson: JSON.stringify({
+                    display_text: btn[0],
+                    id: btn[1]
+                })
+            }));
+        }
+
+        // إنشاء أزرار النسخ
+        if (copy && Array.isArray(copy)) {
+            dynamicButtons.push(...copy.map(btn => ({
                 name: 'cta_copy',
                 buttonParamsJson: JSON.stringify({
                     display_text: btn[0],
                     copy_code: btn[1]
                 })
-	    })
-	    })
+            })));
         }
 
-        // Añadir botones de URL
+        // إنشاء أزرار URL
         if (urls && Array.isArray(urls)) {
-            urls.forEach(url => {
-                dynamicButtons.push({
-                    name: 'cta_url',
-                    buttonParamsJson: JSON.stringify({
-                        display_text: url[0],
-                        url: url[1],
-                        merchant_url: url[1]
-                    })
+            dynamicButtons.push(...urls.map(url => ({
+                name: 'cta_url',
+                buttonParamsJson: JSON.stringify({
+                    display_text: url[0],
+                    url: url[1],
+                    merchant_url: url[1]
                 })
-            })
+            })));
         }
-	
-	 
-/*
-     if (buttons || copy || urls) {
-    let dynamicButtons = [];
 
-    if (buttons) {
-        dynamicButtons = dynamicButtons.concat(buttons.map(btn => ({
-            name: 'quick_reply',
-            buttonParamsJson: JSON.stringify({
-                display_text: btn[0],
-                id: btn[1]
-            }),
-        })));
-    }
-
-    if (copy && (typeof copy === 'string' || typeof copy === 'number')) {
-        dynamicButtons = dynamicButtons.concat(copy.map(btn => ({
-            name: 'cta_copy',
-            buttonParamsJson: JSON.stringify({
-                display_text: btn[0],
-                copy_code: btn[1]
-            }),
-        })));
-    }
-
-    if (urls && Array.isArray(urls)) {
-        dynamicButtons = dynamicButtons.concat(urls.map(url => ({
-            name: 'cta_url',
-            buttonParamsJson: JSON.stringify({
-                display_text: url[0],
-                url: url[1],
-                merchant_url: url[1]
-            }),
-        })));
-    }
-     }
-     */
-	    
-
-
+        // إعداد الرسالة التفاعلية
         const interactiveMessage = {
             body: { text: text },
             footer: { text: footer },
             header: {
-                hasMediaAttachment: false,
-                imageMessage: img ? img.imageMessage : null,
-                videoMessage: video ? video.videoMessage : null
+                hasMediaAttachment: !!media,
+                imageMessage: media?.imageMessage || null,
+                videoMessage: media?.videoMessage || null
             },
             nativeFlowMessage: {
                 buttons: dynamicButtons,
                 messageParamsJson: ''
             }
-        }
+        };
 
-              
-        let msgL = generateWAMessageFromContent(jid, {
+        // إرسال الرسالة
+        const msgL = generateWAMessageFromContent(jid, {
             viewOnceMessage: {
-                message: {
-                    interactiveMessage } } }, { userJid: conn.user.jid, quoted })
-        
-       conn.relayMessage(jid, msgL.message, { messageId: msgL.key.id, ...options })
-            
+                message: { interactiveMessage }
+            }
+        }, { userJid: conn.user.jid, quoted });
+
+        await conn.relayMessage(jid, msgL.message, { messageId: msgL.key.id, ...options });
     }
-}, 
+},
+   
+        
 
 
    /**
