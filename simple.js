@@ -749,7 +749,8 @@ END:VCARD
       },
       enumerable: true,
     },*/
-         //-- new
+
+	  
 sendButton: {
     async value(jid, text = '', footer = '', buffer, buttons, copy, urls, quoted, options) {
         let img, video
@@ -783,6 +784,7 @@ sendButton: {
                 console.error("Error al obtener el tipo de archivo:", error);
             }
         }
+	    /*
 
 	if (buttons) {
 	    
@@ -819,6 +821,43 @@ sendButton: {
                 })
             })
         }
+	*/
+
+     if (buttons || copy || urls) {
+    let dynamicButtons = [];
+
+    if (buttons) {
+        dynamicButtons = dynamicButtons.concat(buttons.map(btn => ({
+            name: 'quick_reply',
+            buttonParamsJson: JSON.stringify({
+                display_text: btn[0],
+                id: btn[1]
+            }),
+        })));
+    }
+
+    if (copy && (typeof copy === 'string' || typeof copy === 'number')) {
+        dynamicButtons = dynamicButtons.concat(copy.map(btn => ({
+            name: 'cta_copy',
+            buttonParamsJson: JSON.stringify({
+                display_text: btn[0],
+                copy_code: btn[1]
+            }),
+        })));
+    }
+
+    if (urls && Array.isArray(urls)) {
+        dynamicButtons = dynamicButtons.concat(urls.map(url => ({
+            name: 'cta_url',
+            buttonParamsJson: JSON.stringify({
+                display_text: url[0],
+                url: url[1],
+                merchant_url: url[1]
+            }),
+        })));
+    }
+     }
+	    
 
 
         const interactiveMessage = {
@@ -845,6 +884,7 @@ sendButton: {
             
     }
 }, 
+	  
 
 sendList: {
     async value(jid, title, text, buttonText, listSections, quoted, options = {}) {
@@ -871,6 +911,7 @@ sendList: {
         await conn.relayMessage(jid, { viewOnceMessage: { message } }, {});
     }
 },
+	  
             
     sendPoll: {
       async value(jid, name = '', optiPoll, options) {
@@ -886,6 +927,8 @@ sendList: {
         return conn.relayMessage(jid, {pollCreationMessage: pollMessage}, {...options});
       },
     },
+	  
+	  
     sendHydrated: {
       /**
              *
