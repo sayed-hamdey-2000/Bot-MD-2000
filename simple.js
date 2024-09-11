@@ -784,7 +784,7 @@ sendButton: {
                 console.error("Error al obtener el tipo de archivo:", error);
             }
         }
-	    /*
+	    
 
 	if (buttons) {
 	    
@@ -796,19 +796,23 @@ sendButton: {
             }),
         }));
       }
+
+
        
-        if (copy && (typeof copy === 'string' || typeof copy === 'number')) {
-            // Añadir botón de copiar
-            const dynamicButtons = copy.map(btn => ({
-                name: 'cta_copy',
+        if (copy && Array.isArray(copy) && (typeof copy === 'string' || typeof copy === 'number')) {
+            
+		copy.map(copy => {
+            dynamicButtons.push({
+		    name: 'cta_copy',
                 buttonParamsJson: JSON.stringify({
-                    display_text: btn[0],
-                    copy_code: btn[1]
-                }),
-	    }));
+                    display_text: copy[0],
+                    copy_code: copy[1]
+                })
+	      })
+	    });
         }
 
-        // Añadir botones de URL
+        
         if (urls && Array.isArray(urls)) {
             urls.forEach(url => {
                 dynamicButtons.push({
@@ -821,7 +825,10 @@ sendButton: {
                 })
             })
         }
-	*/
+
+ 
+
+	    /*
 
      if (buttons || copy || urls) {
     let dynamicButtons = [];
@@ -857,7 +864,7 @@ sendButton: {
         })));
     }
      }
-	    
+	    */
 
 
         const interactiveMessage = {
