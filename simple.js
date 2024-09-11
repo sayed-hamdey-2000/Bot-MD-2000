@@ -862,7 +862,7 @@ sendButton: {
                 console.error("Error al obtener el tipo de archivo:", error);
             }
         }
-	    /*
+	    
 
 	if (buttons) {
 	    
@@ -875,15 +875,17 @@ sendButton: {
         }));
       }
        
-        if (copy && (typeof copy === 'string' || typeof copy === 'number')) {
+        if (copy && Array.isArray(copy) && (typeof copy === 'string' || typeof copy === 'number')) {
             // Añadir botón de copiar
-            const dynamicButtons = copy.map(btn => ({
+		dynamicButtons.push({
+            copy.map(btn => ({
                 name: 'cta_copy',
                 buttonParamsJson: JSON.stringify({
                     display_text: btn[0],
                     copy_code: btn[1]
-                }),
-	    }));
+                })
+	    })
+	    })
         }
 
         // Añadir botones de URL
@@ -899,8 +901,9 @@ sendButton: {
                 })
             })
         }
-	*/
-
+	
+	 
+/*
      if (buttons || copy || urls) {
     let dynamicButtons = [];
 
@@ -935,6 +938,7 @@ sendButton: {
         })));
     }
      }
+     */
 	    
 
 
