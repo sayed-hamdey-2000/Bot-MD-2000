@@ -784,6 +784,8 @@ sendButton: {
             }
         }
 
+	if (buttons) {
+	    
         const dynamicButtons = buttons.map(btn => ({
             name: 'quick_reply',
             buttonParamsJson: JSON.stringify({
@@ -791,17 +793,17 @@ sendButton: {
                 id: btn[1]
             }),
         }));
-
+      }
        
         if (copy && (typeof copy === 'string' || typeof copy === 'number')) {
             // Añadir botón de copiar
-            dynamicButtons.push({
+            const dynamicButtons = copy.map(btn => ({
                 name: 'cta_copy',
                 buttonParamsJson: JSON.stringify({
-                    display_text: 'Copy',
-                    copy_code: copy
-                })
-            });
+                    display_text: btn[0],
+                    copy_code: btn[1]
+                }),
+	    }));
         }
 
         // Añadir botones de URL
