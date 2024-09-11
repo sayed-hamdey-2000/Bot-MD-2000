@@ -92,6 +92,7 @@ export function makeWASocket(connectionOptions, options = {}) {
       },
       enumerable: true,
     },
+	  
     sendNyanCat: {
       async value(jid, text = '', buffer, title, body, url, quoted, options) {
         if (buffer) {
@@ -105,6 +106,7 @@ export function makeWASocket(connectionOptions, options = {}) {
         return conn.relayMessage(jid, prep.message, {messageId: prep.key.id});
       },
     },
+	  
     sendPayment: {
       async value(jid, amount, text, quoted, options) {
         conn.relayMessage(jid, {
@@ -121,6 +123,7 @@ export function makeWASocket(connectionOptions, options = {}) {
                   }, mentionedJid: conn.parseMention(text)}}}}}, {});
       },
     },
+	  
     getFile: {
       /**
              * getBuffer hehe
@@ -148,6 +151,7 @@ export function makeWASocket(connectionOptions, options = {}) {
       },
       enumerable: true,
     },
+	  
     waitEvent: {
       /**
              * waitEvent
@@ -169,6 +173,7 @@ export function makeWASocket(connectionOptions, options = {}) {
         });
       },
     },
+	  
     relayWAMessage: {
       async value(pesanfull) {
         if (pesanfull.message.audioMessage) {
@@ -181,6 +186,7 @@ export function makeWASocket(connectionOptions, options = {}) {
         return mekirim;
       },
     },
+	  
     sendFile: {
       /**
              * Send Media/File with Automatic Type Specifier
@@ -253,6 +259,7 @@ export function makeWASocket(connectionOptions, options = {}) {
       },
       enumerable: true,
     },
+	  
     sendContact: {
       /**
              * Send Contact
@@ -292,6 +299,48 @@ END:VCARD
       },
       enumerable: true,
     },
+
+sendContactArray: {
+    async value(jid, data, quoted, options) {
+        if (!Array.isArray(data[0]) && typeof data[0] === 'string') data = [data]
+                let contacts = []
+        for (let [number, name, isi, isi1, isi2, isi3, isi4, isi5] of data) {
+            number = number.replace(/[^0-9]/g, '')
+            let njid = number + '@s.whatsapp.net'
+            let biz = await conn.getBusinessProfile(njid).catch(_ => null) || {}
+            // N:;${name.replace(/\n/g, '\\n').split(' ').reverse().join(';')};;;
+            let vcard = `
+BEGIN:VCARD
+VERSION:3.0
+N:;${name.replace(/\n/g, '\\n')};;;
+FN:${name.replace(/\n/g, '\\n')}
+item.ORG:${isi}
+item1.TEL;waid=${number}:${PhoneNumber('+' + number).getNumber('international')}
+item1.X-ABLabel:${isi1}
+item2.EMAIL;type=INTERNET:${isi2}
+item2.X-ABLabel:📧 Email
+item3.ADR:;;${isi3};;;;
+item3.X-ABADR:ac
+item3.X-ABLabel:📍 Region
+item4.URL:${isi4}
+item4.X-ABLabel:Website
+item5.X-ABLabel:${isi5}
+END:VCARD`.trim()
+            contacts.push({ vcard, displayName: name })
+        }
+        return await conn.sendMessage(jid, {
+            contacts: {
+                displayName: (contacts.length > 1 ? `${contacts.length} kontak` : contacts[0].displayName) || null,
+                contacts,
+            }
+        },
+        {
+            quoted,
+            ...options
+        })
+        }
+    },
+	  
     reply: {
       /**
              * Reply to a message
@@ -696,6 +745,35 @@ END:VCARD
         }
       }
     },
+
+sendStimg: {
+            async value (jid, path, quoted, options = {}) {
+                    let buff = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await fetch(path)).buffer() : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
+                    let buffer
+                    if (options && (options.packname || options.author)) {
+                        buffer = await writeExifImg(buff, options)
+                    } else {
+                        buffer = await imageToWebp(buff)
+                    }
+                    await conn.sendMessage(jid, { sticker: { url: buffer }, ...options }, { quoted })
+                    return buffer
+                }
+            },
+	  
+sendStvid: {
+                async value (jid, path, quoted, options = {}) {
+                        let buff = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await getBuffer(path) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
+                        let buffer
+                        if (options && (options.packname || options.author)) {
+                            buffer = await writeExifVid(buff, options)
+                        } else {
+                            buffer = await videoToWebp(buff)
+                        }
+                        await conn.sendMessage(jid, { sticker: { url: buffer }, ...options }, { quoted })
+                        return buffer
+                    }
+                },
+	  
         
    // sendButton: {
       /**
@@ -784,7 +862,7 @@ sendButton: {
                 console.error("Error al obtener el tipo de archivo:", error);
             }
         }
-	    
+	    /*
 
 	if (buttons) {
 	    
@@ -796,23 +874,19 @@ sendButton: {
             }),
         }));
       }
-
-
        
-        if (copy && Array.isArray(copy) && (typeof copy === 'string' || typeof copy === 'number')) {
-            
-		copy.map(copy => {
-            dynamicButtons.push({
-		    name: 'cta_copy',
+        if (copy && (typeof copy === 'string' || typeof copy === 'number')) {
+            // Añadir botón de copiar
+            const dynamicButtons = copy.map(btn => ({
+                name: 'cta_copy',
                 buttonParamsJson: JSON.stringify({
-                    display_text: copy[0],
-                    copy_code: copy[1]
-                })
-	      })
-	    });
+                    display_text: btn[0],
+                    copy_code: btn[1]
+                }),
+	    }));
         }
 
-        
+        // Añadir botones de URL
         if (urls && Array.isArray(urls)) {
             urls.forEach(url => {
                 dynamicButtons.push({
@@ -825,10 +899,7 @@ sendButton: {
                 })
             })
         }
-
- 
-
-	    /*
+	*/
 
      if (buttons || copy || urls) {
     let dynamicButtons = [];
@@ -864,7 +935,7 @@ sendButton: {
         })));
     }
      }
-	    */
+	    
 
 
         const interactiveMessage = {
@@ -891,6 +962,201 @@ sendButton: {
             
     }
 }, 
+
+
+   /**
+     * send Button Img
+     * @param {String} jid 
+     * @param {String} contentText 
+     * @param {String} footer
+     * @param {Buffer|String} buffer 
+     * @param {String[]} buttons
+     * @param {Object} quoted 
+     * @param {Object} options 
+     */
+sendButtonImg: {
+    async value (jid, buffer, contentText, footerText, button1, id1, quoted, options) {
+            let type = await conn.getFile(buffer)
+            let { res, data: file } = type
+            if (res && res.status !== 200 || file.length <= 65536) {
+            try { throw { json: JSON.parse(file.toString()) } }
+            catch (e) { if (e.json) throw e.json }
+            }
+            const buttons = [
+            { buttonId: id1, buttonText: { displayText: button1 }, type: 1 }
+            ]
+    
+            const buttonMessage = {
+                image: file,
+                fileLength: 100,
+                caption: contentText,
+                footer: footerText,
+                mentions: await conn.parseMention(contentText + footerText),
+                ...options,
+                buttons: buttons,
+                headerType: 4
+            }
+    
+            return await conn.sendMessage(jid, buttonMessage, { quoted, ephemeralExpiration: global.ephemeral, contextInfo: { mentionedJid: conn.parseMention(contentText + footerText) }, ...options })
+        }
+    },
+    send2ButtonImg: {
+        async value (jid, buffer, contentText, footerText, button1, id1, button2, id2, quoted, options) {
+                let type = await conn.getFile(buffer)
+                let { res, data: file } = type
+                if (res && res.status !== 200 || file.length <= 65536) {
+                try { throw { json: JSON.parse(file.toString()) } }
+                catch (e) { if (e.json) throw e.json }
+                }
+                const buttons = [
+                { buttonId: id1, buttonText: { displayText: button1 }, type: 1 },
+                { buttonId: id2, buttonText: { displayText: button2 }, type: 1 }
+                ]
+        
+                const buttonMessage = {
+                    image: file,
+                    fileLength: 100,
+                    caption: contentText,
+                    footer: footerText,
+                    mentions: await conn.parseMention(contentText + footerText),
+                    ...options,
+                    buttons: buttons,
+                    headerType: 4
+                }
+        
+                return await conn.sendMessage(jid, buttonMessage, { quoted, ephemeralExpiration: 86400, contextInfo: { mentionedJid: conn.parseMention(contentText + footerText) }, ...options })
+            }
+        },
+        send3ButtonImg: {
+        async value (jid, buffer, contentText, footerText, button1, id1, button2, id2, button3, id3, quoted, options) {
+                let type = await conn.getFile(buffer)
+                let { res, data: file } = type
+                if (res && res.status !== 200 || file.length <= 65536) {
+                try { throw { json: JSON.parse(file.toString()) } }
+                catch (e) { if (e.json) throw e.json }
+                }
+                const buttons = [
+                { buttonId: id1, buttonText: { displayText: button1 }, type: 1 },
+                { buttonId: id2, buttonText: { displayText: button2 }, type: 1 },
+                { buttonId: id3, buttonText: { displayText: button3 }, type: 1 }
+                ]
+        
+                const buttonMessage = {
+                    image: file,
+                    fileLength: 100,
+                    caption: contentText,
+                    footer: footerText,
+                    mentions: await conn.parseMention(contentText + footerText),
+                    ...options,
+                    buttons: buttons,
+                    headerType: 4
+                }
+        
+                return await conn.sendMessage(jid, buttonMessage, { quoted, ephemeralExpiration: 86400, contextInfo: { mentionedJid: conn.parseMention(contentText + footerText) }, ...options })
+            }
+        },
+
+
+/** 
+     * send Button Vid
+     * @param {String} jid 
+     * @param {String} contentText 
+     * @param {String} footer
+     * @param {Buffer|String} buffer
+     * @param {String} buttons1
+     * @param {String} row1
+     * @param {Object} quoted 
+     * @param {Object} options 
+     */
+sendButtonVid: {
+    async value (jid, buffer, contentText, footerText, button1, id1, quoted, options) {
+            let type = await conn.getFile(buffer)
+            let { res, data: file } = type
+            if (res && res.status !== 200 || file.length <= 65536) {
+            try { throw { json: JSON.parse(file.toString()) } }
+            catch (e) { if (e.json) throw e.json }
+            }
+            let buttons = [
+            { buttonId: id1, buttonText: { displayText: button1 }, type: 1 }
+            ]
+            const buttonMessage = {
+                video: file,
+                fileLength: 100,
+                caption: contentText,
+                footer: footerText,
+                mentions: await conn.parseMention(contentText),
+                ...options,
+                buttons: buttons,
+                headerType: 4
+            }
+            return await conn.sendMessage(jid, buttonMessage, {
+                quoted,
+                ephemeralExpiration: global.ephemeral,
+                ...options
+            })
+        }
+    },
+    send2ButtonVid: {
+    async value (jid, buffer, contentText, footerText, button1, id1, button2, id2, quoted, options) {
+            let type = await conn.getFile(buffer)
+            let { res, data: file } = type
+            if (res && res.status !== 200 || file.length <= 65536) {
+            try { throw { json: JSON.parse(file.toString()) } }
+            catch (e) { if (e.json) throw e.json }
+            }
+            let buttons = [
+            { buttonId: id1, buttonText: { displayText: button1 }, type: 1 },
+            { buttonId: id2, buttonText: { displayText: button2 }, type: 1 }
+            ]
+            const buttonMessage = {
+                video: file,
+                fileLength: 100,
+                caption: contentText,
+                footer: footerText,
+                mentions: await conn.parseMention(contentText + footerText),
+                ...options,
+                buttons: buttons,
+                headerType: 4
+            }
+            return await conn.sendMessage(jid, buttonMessage, {
+                quoted,
+                ephemeralExpiration: global.ephemeral,
+                ...options
+            })
+        }
+    },
+    send3ButtonVid: { 
+    async value (jid, buffer, contentText, footerText, button1, id1, button2, id2, button3, id3, quoted, options) {
+            let type = await conn.getFile(buffer)
+            let { res, data: file } = type
+            if (res && res.status !== 200 || file.length <= 65536) {
+            try { throw { json: JSON.parse(file.toString()) } }
+            catch (e) { if (e.json) throw e.json }
+            }
+            let buttons = [
+            { buttonId: id1, buttonText: { displayText: button1 }, type: 1 },
+            { buttonId: id2, buttonText: { displayText: button2 }, type: 1 },
+            { buttonId: id3, buttonText: { displayText: button3 }, type: 1 },
+            ]
+            const buttonMessage = {
+                video: file,
+                //fileLength: 100,
+                caption: contentText,
+                footer: footerText,
+                mentions: await conn.parseMention(contentText + footerText),
+                ...options,
+                buttons: buttons,
+                headerType: 4
+            }
+            return await conn.sendMessage(jid, buttonMessage, {
+                quoted,
+                ephemeralExpiration: global.ephemeral,
+                ...options
+            })
+        }
+    }, 
+
+	 
 	  
 
 sendList: {
@@ -1026,6 +1292,9 @@ sendList: {
       },
       enumerable: true,
     },
+
+
+	  
     sendHydrated2: {
       /**
              *
@@ -1116,6 +1385,9 @@ sendList: {
       },
       enumerable: true,
     },
+
+
+	  
     cMod: {
       /**
              * cMod
@@ -1154,6 +1426,9 @@ sendList: {
       },
       enumerable: true,
     },
+
+
+	  
     copyNForward: {
       /**
              * Exact Copy Forward
@@ -1189,6 +1464,9 @@ sendList: {
       },
       enumerable: true,
     },
+
+
+	  
     fakeReply: {
       /**
              * Fake Replies
@@ -1203,6 +1481,8 @@ sendList: {
         return conn.reply(jid, text, {key: {fromMe: areJidsSameUser(fakeJid, conn.user.id), participant: fakeJid, ...(fakeGroupJid ? {remoteJid: fakeGroupJid} : {})}, message: {conversation: fakeText}, ...options});
       },
     },
+
+	  
     downloadM: {
       /**
              * Download media message
@@ -1224,6 +1504,8 @@ sendList: {
       },
       enumerable: true,
     },
+
+	  
     parseMention: {
       /**
              * Parses string into mentionedJid(s)
@@ -1235,6 +1517,8 @@ sendList: {
       },
       enumerable: true,
     },
+
+	  
     getName: {
       /**
              * Get name from jid
@@ -1263,6 +1547,8 @@ sendList: {
       },
       enumerable: true,
     },
+
+	  
     loadMessage: {
       /**
              *
@@ -1278,6 +1564,8 @@ sendList: {
       },
       enumerable: true,
     },
+
+	  
     sendGroupV4Invite: {
       /**
              * sendGroupV4Invite
@@ -1307,6 +1595,8 @@ sendList: {
       },
       enumerable: true,
     },
+
+	  
     processMessageStubType: {
       /**
              * to process MessageStubType
@@ -1347,6 +1637,7 @@ sendList: {
         chats.metadata = metadata;
       },
     },
+	  
     insertAllGroup: {
       async value() {
         const groups = await conn.groupFetchAllParticipating().catch((_) => null) || {};
@@ -1354,6 +1645,7 @@ sendList: {
         return conn.chats;
       },
     },
+	  
     pushMessage: {
       /**
              * pushMessage
@@ -1451,6 +1743,8 @@ sendList: {
         }
       },
     },
+
+	  
     serializeM: {
       /**
              * Serialize Message, so it easier to manipulate
@@ -1461,6 +1755,7 @@ sendList: {
       },
     },
     ...(typeof conn.chatRead !== 'function' ? {
+	    
       chatRead: {
         /**
                  * Read message
@@ -1475,6 +1770,7 @@ sendList: {
       },
     } : {}),
     ...(typeof conn.setStatus !== 'function' ? {
+	    
       setStatus: {
         /**
                  * setStatus bot
@@ -1736,6 +2032,7 @@ export function serialize() {
             enumerable: true,
             configurable: true,
           },
+		
           reply: {
             /**
                          * Reply to quoted message
@@ -1748,6 +2045,7 @@ export function serialize() {
             },
             enumerable: true,
           },
+		
           copy: {
             /**
                          * Copy quoted message
@@ -1758,6 +2056,7 @@ export function serialize() {
             },
             enumerable: true,
           },
+		
           forward: {
             /**
                          * Forward quoted message
@@ -1771,6 +2070,7 @@ export function serialize() {
             },
             enumerable: true,
           },
+		
           copyNForward: {
             /**
                          * Exact Forward quoted message
@@ -1784,6 +2084,7 @@ export function serialize() {
             enumerable: true,
 
           },
+		
           cMod: {
             /**
                          * Modify quoted Message
@@ -1798,6 +2099,7 @@ export function serialize() {
             enumerable: true,
 
           },
+		
           delete: {
             /**
                          * Delete quoted message
@@ -1816,6 +2118,7 @@ export function serialize() {
       value: null,
       writable: true,
     },
+	  
     text: {
       get() {
         const msg = this.msg;
@@ -1995,6 +2298,22 @@ function getRandom() {
   if (Array.isArray(this) || this instanceof String) return this[Math.floor(Math.random() * this.length)];
   return Math.floor(Math.random() * this);
 }
+
+async function generateProfilePicture(mediaUpload) {
+    let bufferOrFilePath
+    if (Buffer.isBuffer(mediaUpload)) bufferOrFilePath = mediaUpload
+    else if ('url' in mediaUpload) bufferOrFilePath = mediaUpload.url.toString()
+    else bufferOrFilePath = await Baileys.toBuffer(mediaUpload.stream)
+    const { read, MIME_JPEG, AUTO } = await Promise.resolve().then(async () => (await import('jimp')).default)
+    const jimp = await read(bufferOrFilePath)
+    const min = jimp.getWidth()
+    const max = jimp.getHeight()
+    const cropped = jimp.crop(0, 0, min, max)
+    return {
+        img: await cropped.quality(100).scaleToFit(720, 720, AUTO).getBufferAsync(MIME_JPEG)
+    }
+}
+
 
 
 /**
