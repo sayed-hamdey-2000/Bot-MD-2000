@@ -1608,6 +1608,65 @@ ${tradutor.texto1[1]} ${messageNumber}/3
   }
 }
 
+export async function waiting(from, m) {
+
+  const loadingStages = [
+    "التحميل 《 ▒▒▒▒▒▒▒▒▒▒》0%,",
+    "التحميل 《 █▒▒▒▒▒▒▒▒▒》10%,",
+    "التحميل 《 ██▒▒▒▒▒▒▒▒》20%,",
+    "التحميل 《 ███▒▒▒▒▒▒▒》30%,",
+    "التحميل 《 ████▒▒▒▒▒▒》40%,",
+    "التحميل 《 █████▒▒▒▒▒》50%,",
+    "التحميل 《 ██████▒▒▒▒》60%,",
+    "التحميل 《 ███████▒▒▒》70%,",
+    "التحميل 《 ████████▒▒》80%,",
+    "التحميل 《 █████████▒》90%,",
+    "التحميل 《 ██████████》100%,",
+    "اكتملت عملية التحميل"
+  ];
+  
+  const loadingStages2 = [
+    "`0%`  ~جاري التحميل ...~",
+    "`5%` □ ~جاري التحميل ...~",
+    "`10%` ◰ ~جاري التحميل ...~",
+    "`20%` ◳ ~جاري التحميل ...~",
+    "`30%` ◲ ~جاري التحميل ...~",
+    "`40%` ◱ ~جاري التحميل ...~",
+    "`50%` ◰ ~جاري التحميل ...~",
+    "`60%` ◳ ~جاري التحميل ...~",
+    "`70%` ◲ ~جاري التحميل ...~",
+    "`80%` ◱ ~جاري التحميل ...~",
+    "`90%` ◰ ~جاري التحميل ...~",
+    "`100%` ■ ~جاري التحميل ...~",
+    "*اكتملت عملية التحميل*"
+  ];
+
+  let loading = [loadingStages, loadingStages2];
+  let selectloading = loading[Math.floor(Math.random() * loading.length)];
+
+  try {
+    const { key } = await conn.sendMessage(from, { text: '~جاري التحميل ...~' }, m);
+
+    for (let i = 0; i < selectloading.length; i++) {
+      await new Promise(resolve => setTimeout(resolve, 1000));  // Add delay between messages
+
+      await conn.relayMessage(from, {
+        protocolMessage: {
+          key: key,
+          type: 14,
+          editedMessage: {
+            conversation: selectloading[i]
+          }
+        }
+      }, { messageId: m.key.id });  // Add 'm' as the original message reference
+    }
+  } catch (error) {
+    console.error('Error displaying loading screen:', error);
+  }
+}
+
+
+
 /**
  * Handle groups participants update
  * @param {import("baileys").BaileysEventMap<unknown>['group-participants.update']} groupsUpdate
