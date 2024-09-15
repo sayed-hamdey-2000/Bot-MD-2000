@@ -886,7 +886,16 @@ sendStvid: {
 },
    
    sendwaiting: {
-	 
+
+/**
+             * send waiting
+             * @param {String} jid
+             * @param {String} text
+             * @param {import("baileys").proto.WebMessageInfo} quoted
+	     # كامل الحقوق إلي : 𝚂𝙰𝚈𝙴𝙳-𝚂𝙷𝙰𝚆𝙰𝚉𝙰
+  
+             */
+	   
 async value(jid, text = '', quoted) {
 let txt;
 	
@@ -971,7 +980,7 @@ let selectloading = loading[Math.floor(Math.random() * loading.length)];
  mentionedJid: [quoted.sender]
 	}}}, 
   {quoted: quoted}); 
-   
+}
 },
 
 
