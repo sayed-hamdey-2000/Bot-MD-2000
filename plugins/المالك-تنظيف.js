@@ -1,4 +1,3 @@
-/* Codigo hecho por @Fabri115 y mejorado por BrunoSobrino */
 
 import { readdirSync, unlinkSync, existsSync, promises as fs, rmSync, readFileSync } from 'fs';
 import path from 'path';
@@ -13,7 +12,7 @@ const handler = async (m, { conn, usedPrefix }) => {
     return conn.sendMessage(m.chat, {text: tradutor.texto1}, {quoted: m});
   }
   await conn.sendMessage(m.chat, {text: tradutor.texto2}, {quoted: m});
-  const sessionPath = './MysticSession/';
+  const sessionPath = './Session/';
   try {
     if (!existsSync(sessionPath)) {
       return await conn.sendMessage(m.chat, {text: tradutor.texto3}, {quoted: m});
