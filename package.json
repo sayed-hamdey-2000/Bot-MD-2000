@@ -67,7 +67,6 @@
     "fluid-spotify.js": "*",
     "fb-downloader-scrapper": "^1.0.1",
     "fs": "^0.0.1-security",
-    "fs-extra": "^10.1.0",
     "got": "^14.2.0",
     "got-scraping": "^4.0.4",
     "genshin-db": "^5.1.1",
