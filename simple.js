@@ -1980,6 +1980,18 @@ export function serialize() {
             },
             enumerable: true,
           },
+
+	 react: {
+                        value(text) {
+                            return self.conn?.sendMessage(this.chat, {
+                                react: {
+                                    text,
+                                    key: this.vM.key
+                                }
+                            })
+                        },
+                        enumerable: true,
+                    },
 		
           forward: {
             /**
@@ -2110,6 +2122,7 @@ export function serialize() {
       },
       enumerable: true,
     },
+    
     getQuotedObj: {
       value() {
         if (!this.quoted.id) return null;
@@ -2129,6 +2142,17 @@ export function serialize() {
       },
       enumerable: true,
     },
+   react: {
+            value(text) {
+                return this.conn?.sendMessage(this.chat, {
+                    react: {
+                        text,
+                        key: this.key
+                    }
+                })
+            },
+            enumerable: true
+        },
   });
 }
 
