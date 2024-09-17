@@ -1,15 +1,11 @@
 
 const handler = async (m) => {
-  const datas = global
-  const idioma = datas.db.data.users[m.sender].language
-  const _translate = JSON.parse(fs.readFileSync(`./language/${idioma}.json`))
-  const tradutor = _translate.plugins.owner_unbanchat
-
+ 
   global.db.data.chats[m.chat].isBanned = false;
-  m.reply(tradutor.texto1);
+  m.reply('*`❲🔓❳` تم الغاء كتم المحادثه*\n\n*`⛊ هذه المحادثة لها الأذن لاستعمالي الآن`*');
 };
 handler.help = ['unbanchat'];
 handler.tags = ['owner'];
-handler.command = /^انبانشات$/i;
+handler.command = /^بانشاتفك$/i;
 handler.rowner = true;
 export default handler;
