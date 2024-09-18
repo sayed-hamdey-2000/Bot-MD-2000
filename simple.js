@@ -1220,7 +1220,14 @@ sendList: {
         return conn.relayMessage(jid, {pollCreationMessage: pollMessage}, {...options});
       },
     },
-	  
+
+   sendPoll2: {
+			async value(jid, name = '', values = [], selectableCount = 1) {
+				return await conn.sendMessage(jid, { poll: { name, values, selectableCount }})
+			},
+			enumerable: true,
+			writable: true
+		},
 	  
     sendHydrated: {
       /**
@@ -2120,7 +2127,20 @@ export function serialize() {
 
           },
 		
-          delete: {
+         
+	react: {
+                        value(text) {
+                            return self.conn?.sendMessage(this.chat, {
+                                react: {
+                                    text,
+                                    key: this.vM.key
+                                }
+                            })
+                        },
+                        enumerable: true,
+	},
+		
+	delete: {
             /**
                          * Delete quoted message
                          */
@@ -2218,6 +2238,17 @@ export function serialize() {
       get() {
         return this.getQuotedObj;
       },
+    },
+    react: {
+                        value(text) {
+                            return self.conn?.sendMessage(this.chat, {
+                                react: {
+                                    text,
+                                    key: this.vM.key
+                                }
+                            })
+                        },
+                        enumerable: true,
     },
     delete: {
       value() {
