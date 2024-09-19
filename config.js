@@ -85,7 +85,7 @@ global.img6 = 'https://telegra.ph/file/fbac075550b8622a94b8e.jpg';
 
 
 
-global.token = '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';
+global.token = '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';
 global.repoOwner = 'sayed-hamdey-2000';
 global.repoName = 'Bot-MD-2000';
 global.branch = 'shawaza';
