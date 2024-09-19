@@ -19,7 +19,6 @@ let createFile = async (filename, data) => {
 let handler = async (m, { isROwner, usedPrefix, command, text }) => {
     await m.reply(global.wait);  
     if (!isROwner) return;  
-
     
     if (!text) {
         throw '*`❲ 💡 ❳ يرجى تحديد اسم الملف والبيانات لاضافاتها الي الاسكربت .`*\n> مثال: ' + usedPrefix + command + ' الاسم| <الكود>';
