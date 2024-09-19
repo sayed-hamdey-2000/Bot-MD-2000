@@ -19,10 +19,13 @@ global.owner = [
 
 global.ownername = '𝚂𝙰𝚈𝙴𝙳-𝚂𝙷𝙰𝚆𝙰𝚉𝙰';
 global.ownernumber = '201145624848';
-global.myid = '201145624848@s.whatsapp.net';
+global.ownerid = '201145624848@s.whatsapp.net';
   
+global.rowner = [];
+global.registers = [];
 global.suittag = ['201145624848', '201204885212'];
 global.prems = ['201145624848', '201204885212'];
+global.mods = [];
 
 global.packname = '𝗦𝗔𝗬𝗘𝗗-𝗦𝗛𝗔𝗪𝗔𝗭𝗔';
 global.author = '𝐒𝐇𝐀𝐖𝐀𝐙𝐀-𝐁𝐎𝐓';
@@ -80,7 +83,12 @@ global.img5 = 'https://telegra.ph/file/07cd1c2a9d2fe455e3b77.jpg';
 global.img6 = 'https://telegra.ph/file/fbac075550b8622a94b8e.jpg';
 
 
-global.mods = [];
+
+
+global.token = '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';
+global.repoOwner = 'sayed-hamdey-2000';
+global.repoName = 'Bot-MD-2000';
+global.branch = 'shawaza';
 
 
 global.d = new Date(new Date().toLocaleString("en-US", {timeZone: "Africa/Cairo"}));
