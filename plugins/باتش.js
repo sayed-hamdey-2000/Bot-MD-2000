@@ -5,15 +5,11 @@ import fs from 'fs';
 
 const exec = promisify(_exec).bind(cp);
 const handler = async (m, {conn, isROwner, usedPrefix, command, text}) => {
-  const datas = global
-  const idioma = datas.db.data.users[m.sender].language
-  const _translate = JSON.parse(fs.readFileSync(`./language/${idioma}.json`))
-  const tradutor = _translate.plugins.owner_getplugin
   
   const ar = Object.keys(plugins);
   const ar1 = ar.map((v) => v.replace('.js', ''));
-  if (!text) throw `${tradutor.texto1[0]} ${usedPrefix + command}* info-infobot\n\n${tradutor.texto1[1]} ${ar1.map((v) => ' ' + v).join`\n*◉*`}`;
-  if (!ar1.includes(text)) return m.reply(`${tradutor.texto2[0]} "${text}", ${tradutor.texto2[1]} ${ar1.map((v) => ' ' + v).join`\n*◉*`}`);
+  if (!text) throw `╭──────────────────╮\n│ قائمة الملفات المتاحة.\n│ عدد الملفات المتاحة: ${ar1.length}\n╰──────────────────╯\n\n╭──────────────────╮\n${ar1.map((v, index) => `│ [${index + 1}] ${v}`).join('\n')}`;
+  if (!ar1.includes(text)) return m.reply(`╭──────────────────╮\n│ ادخل اسم ملف صحيح .\n│ عدد الملفات المتاحة: ${ar1.length}\n╰──────────────────╯\n\n╭──────────────────╮\n${ar1.map((v, index) => `│ [${index + 1}] ${v}`).join('\n')}`);
   let o;
   try {
     o = await exec('cat plugins/' + text + '.js');
