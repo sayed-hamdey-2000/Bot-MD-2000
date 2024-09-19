@@ -1,12 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 
-// دالة لإنشاء الملف
+
 let createFile = async (filename, data) => {
     let filePath = path.join('plugins', filename);
 
     try {
-        // كتابة البيانات إلى الملف
+        
         await fs.promises.writeFile(filePath, data, 'utf8');
         console.log(`تم إنشاء الملف ${filename} بنجاح.`);
     } catch (err) {
@@ -15,20 +15,20 @@ let createFile = async (filename, data) => {
     }
 };
 
-// المعالج للأمر
-let handler = async (m, { isROwner, usedPrefix, command, text }) => {
-    await m.reply(global.wait);  // يرسل رسالة انتظار
-    if (!isROwner) return;  // يتحقق مما إذا كان المستخدم مالكًا
 
-    // التحقق من وجود اسم الملف والبيانات لإنشاء الملف
+let handler = async (m, { isROwner, usedPrefix, command, text }) => {
+    await m.reply(global.wait);  
+    if (!isROwner) return;  
+
+    
     if (!text) {
-        throw `يرجى تحديد اسم الملف والبيانات لإنشاء الملف، مثال:\n${usedPrefix + command} example.js <البيانات>`;
+        throw '`*❲ 💡 ❳ يرجى تحديد اسم الملف والبيانات لاضافاتها الي الاسكربت .`*\n> مثال: ' + usedPrefix + command + ' الاسم| <الكود>';
     }
 
-    // فصل اسم الملف والبيانات من النص المدخل
+    
     let parts = text.split('|');
     if (parts.length < 2) {
-        throw `يرجى تحديد اسم الملف والبيانات، مثال:\n${usedPrefix + command} example.js <البيانات>`;
+        throw '`*❲ 💡 ❳ يرجى التأكد من اسم الملف والبيانات لاضافاتها الي الاسكربت .*`\n> مثال: ' + usedPrefix + command + ' الاسم| <الكود>';
     }
 
     let filename = parts[0];
@@ -39,14 +39,14 @@ let handler = async (m, { isROwner, usedPrefix, command, text }) => {
 
     try {
         await createFile(filename, data);
-        m.reply(`تم إنشاء الملف ${filename} بنجاح.`);
+        m.reply('`*❲ 💡 ❳ تم اضافه الملف الي الاسكربت بنجاح .*`\n> الملف: ' + filename);
     } catch (e) {
         console.error(`حدث خطأ أثناء إنشاء الملف ${filename}: ${e.message}`);
-        m.reply(`حدث خطأ أثناء إنشاء الملف ${filename}: ${e.message}`);
+        m.reply('`*❲ ❗ ❳ حدث خطأ اثناء اضافه الملف الي الاسكربت .*`\n> الملف: ' + filename + '\n> الخطأ: ' + e.message);
     }
 };
 
-// إعدادات المساعدة والتصنيف والأمر
+
 handler.help = ['createplugin'];
 handler.tags = ['owner'];
 handler.command = /^(gps|باتش-اضافه)$/i;
