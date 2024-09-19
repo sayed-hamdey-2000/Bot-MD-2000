@@ -2,10 +2,10 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 
-const githubToken = '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';
-const repoOwner = 'sayed-hamdey-2000';
-const repoName = 'Bot-MD-2000';
-const branch = 'shawaza';
+const githubToken = global.token;
+const repoOwner = global.repoOwner;
+const repoName = global.repoName;
+const branch = global.branch;
 
 let handler = async (m, { isROwner, usedPrefix, command, text }) => {
 
