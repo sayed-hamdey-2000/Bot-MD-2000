@@ -8,8 +8,8 @@ const handler = async (m, {conn, isROwner, usedPrefix, command, text}) => {
   
   const ar = Object.keys(plugins);
   const ar1 = ar.map((v) => v.replace('.js', ''));
-  if (!text) throw `╭──────────────────╮\n│ قائمة الملفات المتاحة.\n│ عدد الملفات المتاحة: ${ar1.length}\n╰──────────────────╯\n\n╭──────────────────╮\n${ar1.map((v, index) => `│ [${index + 1}] ${v}`).join('\n')}`;
-  if (!ar1.includes(text)) return m.reply(`╭──────────────────╮\n│ ادخل اسم ملف صحيح .\n│ عدد الملفات المتاحة: ${ar1.length}\n╰──────────────────╯\n\n╭──────────────────╮\n${ar1.map((v, index) => `│ [${index + 1}] ${v}`).join('\n')}`);
+  if (!text) throw `╭──────────────────╮\n│ قائمة الملفات المتاحة.\n│ عدد الملفات المتاحة: ${ar1.length}\n╰──────────────────╯\n\n╭──────────────────╮\n${ar1.map((v, index) => `│ [${index + 1}] ${v}`).join('\n')}\n╰──────────────────╯`;
+  if (!ar1.includes(text)) return m.reply(`╭──────────────────╮\n│ ادخل اسم ملف صحيح .\n│ عدد الملفات المتاحة: ${ar1.length}\n╰──────────────────╯\n\n╭──────────────────╮\n${ar1.map((v, index) => `│ [${index + 1}] ${v}`).join('\n')}\n╰──────────────────╯`);
   let o;
   try {
     o = await exec('cat plugins/' + text + '.js');
