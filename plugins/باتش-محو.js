@@ -2,10 +2,10 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 
-const githubToken = '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';
-const repoOwner = 'sayed-hamdey-2000';
-const repoName = 'Bot-MD-2000';
-const branch = 'shawaza';
+const githubToken = global.token;
+const repoOwner = global.repoOwner;
+const repoName = global.repoName;
+const branch = global.branch;
 
 let handler = async (m, { isROwner, usedPrefix, command, text }) => {
 
@@ -14,7 +14,7 @@ let handler = async (m, { isROwner, usedPrefix, command, text }) => {
     if (!isROwner) return;
 
     if (!text) {
-        throw '`*❲ 💡 ❳ يرجى تحديد اسم الملف لحذفه من الاسكربت .*`\n> مثال: ' + usedPrefix + command + ' الاسم';
+        throw '*`❲ 💡 ❳ يرجى تحديد اسم الملف لحذفه من الاسكربت .`*\n> مثال: ' + usedPrefix + command + ' الاسم';
     }
 
     let filename = text.trim();
@@ -24,10 +24,10 @@ let handler = async (m, { isROwner, usedPrefix, command, text }) => {
 
     try {
         await deleteFileFromGithub(filename);
-        m.reply('`*❲ 💡 ❳ تم حذف الملف من الاسكربت بنجاح .*`\n> الملف: ' + filename);
+        m.reply('*`❲ 💡 ❳ تم حذف الملف من الاسكربت بنجاح .`*\n> الملف: ' + filename);
     } catch (e) {
         console.error(`حدث خطأ أثناء حذف الملف ${filename} من GitHub: ${e.message}`);
-        m.reply('`*❲ ❗ ❳ حدث خطأ اثناء حذف الملف من الاسكربت .*`\n> الملف: ' + filename + '\n> الخطأ: ' + e.message);
+        m.reply('*`❲ ❗ ❳ حدث خطأ اثناء حذف الملف من الاسكربت .`*\n> الملف: ' + filename + '\n> الخطأ: ' + e.message);
     }
 };
 
@@ -69,6 +69,6 @@ const deleteFileFromGithub = async (filename) => {
         
     } catch (error) {
         console.error(`فشل في حذف الملف ${filename} من GitHub: ${error.message}`);
-        throw '`*❲ ❗ ❳ حدث خطأ اثناء حذف الملف من الاسكربت .*`\n> الملف: ' + filename + '\n> الخطأ: ' + error.message + '`';
+        throw '*`❲ ❗ ❳ حدث خطأ اثناء حذف الملف من الاسكربت .`*\n> الملف: ' + filename + '\n> الخطأ: ' + error.message + '`';
     }
 };
