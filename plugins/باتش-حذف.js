@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 let deleteFile = async (filename) => {
-    let filePath = path.join('plugins', filename); // المسار الذي يحتوي على الملفات
+    let filePath = path.join('plugins', filename); 
 
     try {
         fs.unlinkSync(filePath);
@@ -18,17 +18,18 @@ let handler = async (m, { isROwner, usedPrefix, command, text }) => {
     if (!isROwner) return;
 
     if (!text) {
-        throw `يرجى تحديد اسم الملف المراد حذفه، مثال:\n${usedPrefix + command} example.js`;
+       throw '*`❲ 💡 ❳ يرجى تحديد اسم الملف المراد حذفه .`*\n> مثال: ' + usedPrefix + command + ' الإسم';
     }
 
     try {
-        // حذف الملف
-        await deleteFile(text + '.js');
+        const fileName = text + '.js';
+            
+        await deleteFile(fileName);
         
-        m.reply(`تم حذف الملف ${text}.js بنجاح.`);
+        m.reply('*`❲ 💡 ❳ تم حذف الملف بنجاح .`*\n> الملف: ' + fileName);
     } catch (e) {
         console.error(`حدث خطأ أثناء حذف الملف ${text}.js: ${e.message}`);
-        m.reply(`حدث خطأ أثناء حذف الملف ${text}.js: ${e.message}`);
+        m.reply('*`❲ ❗ ❳ حدث خطأ اثناء حذف الملف .`*\n> الملف: ' + fileName + '\n> الخطأ: ' + e.message);
     }
 };
 
